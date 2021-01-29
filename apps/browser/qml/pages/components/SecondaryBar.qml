@@ -22,7 +22,7 @@ Column {
     property bool bookmarked
     property int horizontalOffset
     property int iconWidth
-    property real midIconWidth: iconWidth + (iconWidth - forwardButton.width) / 4
+    property real midIconWidth: iconWidth + (iconWidth - forwardButton.width) / 5
 
     width: parent.width
     height: isPortrait ? Settings.toolbarLarge : Settings.toolbarSmall
@@ -95,10 +95,10 @@ Column {
             onTapped: webView.goForward()
         }
 
-        // Spacer for pushing Search, Bookmark, Share, Downloads to the right hand side
+        // Spacer for pushing Search, Bookmark, Share, SearchEngine, Downloads to the right hand side
         Item {
             height: parent.height
-            width: parent.width - addTabButton.width - forwardButton.width - midIconWidth * 4 - downloadsButton.width
+            width: parent.width - addTabButton.width - forwardButton.width - midIconWidth * 5 - downloadsButton.width
         }
 
         Shared.IconButton {
@@ -129,6 +129,13 @@ Column {
             icon.source: "image://theme/icon-m-share"
             active: webView.contentItem
             onTapped: shareActivePage()
+        }
+
+        Shared.IconButton {
+            width: midIconWidth
+            icon.source: "image://theme/icon-m-share"
+            active: webView.searchEngine.available
+            onTapped: webView.searchEngine.addSearchEngine()
         }
 
         Shared.IconButton {

@@ -62,6 +62,10 @@ WebContainer {
 
     property var linkHandler: LinkHandler {}
 
+    property var searchEngine: SearchEngine {
+        available: false
+    }
+
     function stop() {
         if (contentItem) {
             contentItem.stop()
@@ -206,6 +210,8 @@ WebContainer {
                 if (!modelUrl || modelUrl != url) {
                     tabModel.updateThumbnailPath(tabId, "")
                 }
+
+                webView.searchEngine.available = false
             }
 
             onBgcolorChanged: {
@@ -316,6 +322,12 @@ WebContainer {
                 case "embed:OpenLink": {
                     linkHandler.handleLink(data.uri)
                     break
+                }
+                case "Link:AddSearch": {
+                    webView.searchEngine.available = true
+                    webView.searchEngine.get = data.url
+                    webView.searchEngine.href = data.engine.href
+                    webView.searchEngine.title = data.engine.title
                 }
                 }
             }
