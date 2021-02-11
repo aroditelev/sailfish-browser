@@ -311,6 +311,55 @@ Page {
         }
     }
 
+    Browser.PopUpMenu {
+        id: secondaryBar
+        active: overlay.toolBar.secondaryToolsActive
+        menuItem: Component {
+            Browser.PopUpMenuItem {
+                horizontalOffset: overlay.toolBar.horizontalOffset
+                iconWidth: overlay.toolBar.iconWidth
+            }
+        }
+
+        footer: Component {
+           Browser.PopUpMenuFooterItem {
+               iconWidth: overlay.toolBar.iconWidth
+           }
+        }
+
+        onClosed: overlay.dismiss(true)
+
+        anchors {
+            right: parent.right
+            rightMargin: Theme.paddingMedium
+        }
+
+        states: [
+            State {
+                name: secondaryBar._tablet
+                changes: AnchorChanges {
+                    target: secondaryBar
+                    anchors.top: parent.top
+                }
+                PropertyChanges {
+                    target: secondaryBar
+                    anchors.topMargin: Theme.paddingMedium
+                }
+            },
+            State {
+                name: secondaryBar._phone
+                changes: AnchorChanges {
+                    target: secondaryBar
+                    anchors.bottom: parent.bottom
+                }
+                PropertyChanges {
+                    target: secondaryBar
+                    anchors.bottomMargin: Theme.paddingMedium
+                }
+            }
+        ]
+    }
+
     CoverActionList {
         enabled: (browserPage.status === PageStatus.Active || browserPage.tabPageActive || !webView.tabModel || webView.tabModel.count === 0)
         iconBackground: true

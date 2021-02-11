@@ -26,6 +26,7 @@ Shared.Background {
     property QtObject webView
     property Item browserPage
     property alias historyModel: historyList.model
+    property alias favoriteModel: favoriteGrid.model
     property alias toolBar: toolBar
     property alias progressBar: progressBar
     property alias animator: overlayAnimator

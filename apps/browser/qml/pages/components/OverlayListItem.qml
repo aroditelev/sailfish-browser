@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2020 Open Mobile Platform LLC
+** Copyright (C) 2020 - 2021 Open Mobile Platform LLC
 **
 ****************************************************************************/
 
@@ -26,6 +26,7 @@ BackgroundItem {
 
         width: iconWidth
         height: parent.height
+        x: Theme.paddingMedium
 
         Icon {
             id: icon

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014 - 2019 Jolla Ltd.
- * Copyright (c) 2019 Open Mobile Platform LLC.
+ * Copyright (c) 2019 - 2021 Open Mobile Platform LLC.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
@@ -26,7 +26,7 @@ Column {
     property real certOverlayAnimPos
     property real certOverlayPreferedHeight: 4 * toolBarRow.height
     readonly property bool showFindButtons: webView.findInPageHasResult && findInPageActive
-    property alias bookmarked: secondaryBar.bookmarked
+    property var bookmarked
     readonly property alias rowHeight: toolsRow.height
     readonly property int maxRowCount: 6
 
@@ -122,17 +122,6 @@ Column {
             }
             onLoaded: toolBarRow.showInfoOverlay()
         }
-    }
-
-    SecondaryBar {
-        id: secondaryBar
-        visible: opacity > 0.0 || height > 0.0
-        opacity: secondaryToolsActive ? 1.0 : 0.0
-        height: secondaryToolsHeight
-        horizontalOffset: toolBarRow.horizontalOffset
-        iconWidth: toolBarRow.iconWidth
-
-        Behavior on opacity { FadeAnimation {} }
     }
 
     Row {
