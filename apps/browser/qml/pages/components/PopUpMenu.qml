@@ -19,19 +19,19 @@ Item {
     readonly property int cornerRadius: 12
     readonly property int widthRatio: 18
     readonly property int heightRatio: 28
-    readonly property string _tablet: "tablet"
-    readonly property string _phone: "phone"
     readonly property bool isTablet: Screen.sizeCategory > Screen.Medium
     readonly property bool _open: active
+    readonly property int _menuItemHeight: isTablet
+                                          ? container.contentHeight + footer.height
+                                          : isPortrait ? Theme.paddingLarge * heightRatio : Screen.width - Theme.paddingMedium * 2
 
     signal closed
 
-    width: Theme.paddingLarge * widthRatio
-    height: isTablet ? container.contentHeight : isPortrait ? Theme.paddingLarge * heightRatio : Screen.width - Theme.paddingMedium * 2
+    width: Math.max(Theme.paddingLarge * widthRatio, footer.implicitWidth)
+    height: Math.min(parent.height - Theme.paddingLarge * 2, _menuItemHeight)
 
-    visible: _open
     opacity: _open ? 1.0 : 0.0
-    state: isTablet ? _tablet : _phone
+    visible: opacity > 0.0
 
     Behavior on opacity { FadeAnimation {} }
 
@@ -85,12 +85,12 @@ Item {
             VerticalScrollDecorator {}
         }
 
-         Loader {
-             id: footer
-             width: parent.width
-             active: popUpMenu._open
-             sourceComponent: popUpMenu.footer
-             anchors.bottom: parent.bottom
-         }
+        Loader {
+            id: footer
+            width: parent.width
+            active: popUpMenu._open
+            sourceComponent: popUpMenu.footer
+            anchors.bottom: parent.bottom
+        }
     }
 }
