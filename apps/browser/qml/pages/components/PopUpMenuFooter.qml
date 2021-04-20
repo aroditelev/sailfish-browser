@@ -23,9 +23,11 @@ import "../../shared" as Shared
 Rectangle {
     id: root
     property int iconWidth
+    property int toolBarPortraitHeight
     readonly property real overlayOpacity: 0.15
 
     height: Theme.itemSizeMedium
+    implicitWidth: content.width + Theme.paddingMedium * 2
     color: Theme.colorScheme === Theme.LightOnDark ? "black" : "white"
 
     ColorOverlay {
@@ -41,9 +43,9 @@ Rectangle {
         spacing: Theme.paddingLarge + Theme.paddingSmall + Theme.paddingSmall / 2
         anchors.centerIn: parent
 
-        Shared.ExpandingButton {
+        Shared.IconButton {
             id: forwardButton
-            expandedWidth: root.iconWidth
+            width: Theme.itemSizeSmall
             icon.source: "image://theme/icon-m-forward"
             icon.opacity: enabled ? 1.0 : Theme.opacityLow
             enabled: webView.canGoForward
@@ -53,9 +55,9 @@ Rectangle {
             }
         }
 
-        Shared.ExpandingButton {
+        Shared.IconButton {
             id: shareButton
-            expandedWidth: root.iconWidth
+            width: Theme.itemSizeSmall
             icon.source: "image://theme/icon-m-share"
             icon.opacity: enabled ? 1.0 : Theme.opacityLow
             enabled: webView.contentItem
@@ -65,8 +67,8 @@ Rectangle {
             }
         }
 
-        Shared.ExpandingButton {
-            expandedWidth: root.iconWidth
+        Shared.IconButton {
+            width: Theme.itemSizeSmall
             icon.source: overlay.toolBar.bookmarked ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
             icon.opacity: enabled ? 1.0 : Theme.opacityLow
             enabled: webView.contentItem
@@ -79,9 +81,9 @@ Rectangle {
             }
         }
 
-        Shared.ExpandingButton {
+        Shared.IconButton {
             id: reloadButton
-            expandedWidth: root.iconWidth
+            width: Theme.itemSizeSmall
             icon.source: webView.loading ? "image://theme/icon-m-reset" : "image://theme/icon-m-refresh"
             icon.opacity: enabled ? 1.0 : Theme.opacityLow
             enabled: webView.contentItem

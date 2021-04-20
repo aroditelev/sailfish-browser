@@ -26,7 +26,7 @@ Item {
     property int iconWidth
     readonly property int verticalPadding: 3 * Theme.paddingSmall
 
-    height: content.height + verticalPadding
+    height: content.height + verticalPadding * 2
 
     Column {
         id: content
@@ -54,7 +54,7 @@ Item {
                 height: Theme.itemSizeSmall
                 iconWidth: root.iconWidth
                 horizontalOffset: root.horizontalOffset
-                iconSource: "image://theme/icon-m-tab-incognito-new"
+                iconSource: "image://theme/icon-m-incognito-new"
                 //% "New private tab"
                 text: qsTrId("sailfish_browser-la-new_private_tab")
                 onClicked: {
@@ -86,7 +86,7 @@ Item {
                 height: Theme.itemSizeSmall
                 iconWidth: root.iconWidth
                 horizontalOffset: root.horizontalOffset
-                iconSource: "image://theme/icon-m-add-to-main"
+                iconSource: "image://theme/icon-m-add-to-grid"
                 //% "Add to apps grid"
                 text: qsTrId("sailfish_browser-la-add_to_apps_grid")
                 onClicked: pageStack.animatorPush("AddToAppGridDialog.qml",
@@ -118,10 +118,7 @@ Item {
 
         TextSwitch {
             // When changing theme or orientation, the offset changes. Strange behavior.
-            x: Theme.colorScheme === Theme.LightOnDark ? isPortrait ? Theme.paddingLarge + Theme.paddingSmall
-                                                                    : Theme.paddingLarge + Theme.paddingMedium + Theme.paddingSmall
-                                                       : isPortrait ? Theme.paddingMedium + Theme.paddingSmall
-                                                       : Theme.paddingLarge + Theme.paddingSmall
+            leftMargin: Theme.paddingLarge * 2 + (Theme.colorScheme === Theme.LightOnDark ? Theme.paddingMedium * 2 : Theme.paddingMedium)
 
             height: Theme.itemSizeSmall
             enabled: webView.contentItem

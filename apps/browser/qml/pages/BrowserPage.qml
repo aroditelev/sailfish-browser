@@ -316,14 +316,16 @@ Page {
         active: overlay.toolBar.secondaryToolsActive
         menuItem: Component {
             Browser.PopUpMenuItem {
-                horizontalOffset: overlay.toolBar.horizontalOffset
-                iconWidth: overlay.toolBar.iconWidth
+                iconWidth: Theme.iconSizeMedium + Theme.paddingLarge
             }
         }
 
         footer: Component {
-           Browser.PopUpMenuFooterItem {
+           Browser.PopUpMenuFooter {
                iconWidth: overlay.toolBar.iconWidth
+               height: isPortrait
+                       ? overlay.toolBar.scaledPortraitHeight - secondaryBar.anchors.bottomMargin
+                       : Theme.itemSizeMedium
            }
         }
 
@@ -332,32 +334,9 @@ Page {
         anchors {
             right: parent.right
             rightMargin: Theme.paddingMedium
+            bottom: parent.bottom
+            bottomMargin: Theme.paddingMedium
         }
-
-        states: [
-            State {
-                name: secondaryBar._tablet
-                changes: AnchorChanges {
-                    target: secondaryBar
-                    anchors.top: parent.top
-                }
-                PropertyChanges {
-                    target: secondaryBar
-                    anchors.topMargin: Theme.paddingMedium
-                }
-            },
-            State {
-                name: secondaryBar._phone
-                changes: AnchorChanges {
-                    target: secondaryBar
-                    anchors.bottom: parent.bottom
-                }
-                PropertyChanges {
-                    target: secondaryBar
-                    anchors.bottomMargin: Theme.paddingMedium
-                }
-            }
-        ]
     }
 
     CoverActionList {
