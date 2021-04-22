@@ -194,7 +194,7 @@ Column {
             id: backIcon
             expandedWidth: toolBarRow.iconWidth
             icon.source: "image://theme/icon-m-back"
-            active: webView.canGoBack && !toolBarRow.secondaryToolsActive && !findInPageActive
+            active: webView.canGoBack && !findInPageActive
             onTapped: webView.goBack()
         }
 
@@ -204,7 +204,7 @@ Column {
             property real glow
             expandedWidth: toolBarRow.smallIconWidth
             icon.source: danger ? "image://theme/icon-s-filled-warning" : "image://theme/icon-s-outline-secure"
-            active: webView.security && webView.security.validState && (!toolBarRow.secondaryToolsActive && !findInPageActive)
+            active: webView.security && webView.security.validState && !findInPageActive
             icon.color: danger ? Qt.tint(Theme.primaryColor,
                                          Qt.rgba(Theme.errorColor.r, Theme.errorColor.g,
                                                  Theme.errorColor.b, glow))
@@ -325,7 +325,7 @@ Column {
             id: reloadButton
             expandedWidth: toolBarRow.iconWidth
             icon.source: webView.loading ? "image://theme/icon-m-reset" : "image://theme/icon-m-refresh"
-            active: webView.contentItem && !toolBarRow.secondaryToolsActive && !findInPageActive
+            active: webView.contentItem && !findInPageActive
             onTapped: {
                 if (webView.loading) {
                     webView.stop()
@@ -346,24 +346,15 @@ Column {
                 icon.source: "image://theme/icon-m-menu"
                 icon.anchors.horizontalCenterOffset: - toolBarRow.horizontalOffset
                 width: parent.width
-                opacity: secondaryToolsActive || findInPageActive ? 0.0 : 1.0
+                opacity: findInPageActive ? 0.0 : 1.0
                 onTapped: showSecondaryTools()
-            }
-
-            Shared.IconButton {
-                icon.source: "image://theme/icon-m-menu"
-                icon.anchors.horizontalCenterOffset: toolBarRow.horizontalOffset
-                width: parent.width
-                rotation: 180
-                opacity: secondaryToolsActive && !findInPageActive ? 1.0 : 0.0
-                onTapped: showChrome()
             }
 
             Shared.IconButton {
                 icon.source: "image://theme/icon-m-reset"
                 icon.anchors.horizontalCenterOffset: - toolBarRow.horizontalOffset
                 width: parent.width
-                opacity: !secondaryToolsActive && findInPageActive ? 1.0 : 0.0
+                opacity: findInPageActive ? 1.0 : 0.0
                 onTapped: {
                     resetFind()
                     showChrome()

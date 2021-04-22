@@ -89,13 +89,16 @@ Item {
                 iconSource: "image://theme/icon-m-add-to-grid"
                 //% "Add to apps grid"
                 text: qsTrId("sailfish_browser-la-add_to_apps_grid")
-                onClicked: pageStack.animatorPush("AddToAppGridDialog.qml",
+                onClicked: {
+                    overlay.animator.showChrome()
+                    pageStack.animatorPush("AddToAppGridDialog.qml",
                                                   {
                                                       "url": url,
                                                       "title": title,
                                                       "desktopBookmarkWriter": desktopBookmarkWriter,
                                                       "bookmarkWriterParent": pageStack
                                                   })
+                }
             }
 
             OverlayListItem {
@@ -107,6 +110,7 @@ Item {
                 text: qsTrId("sailfish_browser-la-save_as-pdf")
 
                 onClicked: {
+                    overlay.animator.showChrome()
                     if (DownloadManager.pdfPrinting) {
                         pdfPrintingNotice.show()
                     } else {
@@ -116,21 +120,21 @@ Item {
             }
         }
 
-        TextSwitch {
-            // When changing theme or orientation, the offset changes. Strange behavior.
-            leftMargin: Theme.paddingLarge * 2 + (Theme.colorScheme === Theme.LightOnDark ? Theme.paddingMedium * 2 : Theme.paddingMedium)
-
-            height: Theme.itemSizeSmall
+        OverlayListItem {
             enabled: webView.contentItem
-            automaticCheck: false
-
+            height: Theme.itemSizeSmall
+            iconWidth: root.iconWidth
+            horizontalOffset: root.horizontalOffset
+            checkable: true
+            checked: webView.contentItem && webView.contentItem.desktopMode
+            iconSource: "image://theme/icon-m-computer"
             //: Label for text switch that reloads page in desktop mode
-            //% "Desktop site"
-            text: qsTrId("settings_browser-la-desktop_site")
-            checked: webView.contentItem ? webView.contentItem.desktopMode : false
+            //% "Desktop version"
+            text: qsTrId("settings_browser-la-desktop_version")
+
             onClicked: {
                 overlay.animator.showChrome()
-                webView.contentItem.desktopMode = !checked
+                webView.contentItem.desktopMode = !webView.contentItem.desktopMode
             }
         }
 
@@ -147,7 +151,7 @@ Item {
 
                 onClicked: {
                     overlay.animator.showChrome()
-                    pageStack.push("../BookmarkPage.qml", { bookmarkModel: overlay.favoriteModel })
+                    pageStack.push("../BookmarkPage.qml", { bookmarkModel: overlay.bookmarkModel })
                 }
             }
 
@@ -172,7 +176,10 @@ Item {
                 //% "Downloads"
                 text: qsTrId("sailfish_browser-la-downloads")
                 iconSource: "image://theme/icon-m-downloads"
-                onClicked: settingsApp.call("showTransfers", [])
+                onClicked: {
+                    overlay.animator.showChrome()
+                    settingsApp.call("showTransfers", [])
+                }
             }
 
             OverlayListItem {
